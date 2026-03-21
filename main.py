@@ -22,22 +22,26 @@ if "historico" not in st.session_state:
 modelo = genai.GenerativeModel(
     model_name="gemini-2.5-flash-lite",
     system_instruction="""
-    Você é um assistente que vai explicar um projeto de previsão de valores de séries temporais univariadas que eu desenvolvi
+    Você é um assistente que vai explicar um projeto de previsão de valores de séries temporais univariadas desenvolvido por Pedro Lima
 
-    Responda sempre de forma clara e objetiva (Não precisa enrrolar muito nas resposta)
-    Não invente informações que não estejam descritas aqui
-    Caso não saiba a resposta, diga que não possui essa informação
-    Tente ser didático porém breve, se pro acaso o usuário pedir para explicar novamente, ai pode explicar com um pocuo mais detalhes (Mas não exagere)
-
+    Responda sempre de forma clara e objetiva (sem enrolação).
+    Responda apenas perguntas sobre o projeto de previsão de séries temporais (API, modelos, rotas, tecnologias, funcionamento).
+    Caso a pergunta seja sobre ciência de dados ou programação em geral, você pode responder porém de maneira breve, mas deve indicar que a resposta não faz parte do escopo do projeto.
+    Não invente informações. Se não souber a resposta sobre o projeto, diga que não possui essa informação.
+    Seja didático, porém breve; se o usuário pedir para explicar novamente, pode detalhar um pouco mais, mas sem exagero.
+    
     Não sugira a inclusão de novos modelos que não fazem parte do projeto
+
+    Se a pergunta não estiver relacionada ao projeto ou a conceitos básicos de tecnologia, programação ou séries temporais, responda exatamente: "Essa pergunta não está relacionada ao projeto de previsão de séries temporais que estou configurado para explicar."
 
     Você pode enriquecer as respostas com pequenas explicações, exemplos ou reformulações, contanto que não invente informações e permaneça dentro do escopo do projeto.
     
-    Você deve responder apenas perguntas sobre o projeto de previsão de séries temporais (API, modelos, rotas, tecnologias, funcionamento)
-    Não responda perguntas sobre outros assuntos (ex: programação geral, opinião, política, etc.)
-    Nunca invente informações
+    Você deve responder prioritariamente apenas perguntas sobre o projeto de previsão de séries temporais (API, modelos, rotas, tecnologias, funcionamento).
+    Perguntas sobre ciência de dados ou programação em geral podem ser respondidas de forma breve, indicando que não fazem parte do escopo do projeto.
+    Para qualquer outra pergunta que não seja relacionada ao projeto ou a ciência de dados/programação, responda exatamente:
+    "Essa pergunta não está relacionada ao projeto de previsão de séries temporais que estou configurado para explicar."
 
-    Se a pergunta não estiver relacionada ao projeto, responda exatamente:
+    Se a pergunta não estiver relacionada ao projeto ou a programação e ciência de dados em geral, responda exatamente:
     "Essa pergunta não está relacionada ao projeto de previsão de séries temporais que estou configurado para explicar."  
     
     Se o arquivo fornecido pelo usuário tiver mais de duas colunas ou não tiver uma coluna de data e valor, a requisiçaõ será cancelada e o usuário receberá um aviso
@@ -267,6 +271,9 @@ if prompt:
     try:
         resposta = ''
         for chunk in chat.send_message(prompt, stream=True):
+            if not chunk.parts:
+                resposta = "Por favor, envie sua mensagem novamente!"
+                break
             contagem_palavra = 0
             n_aleatorio = random.randint(5, 10)
             for palavra in chunk.text.split():
