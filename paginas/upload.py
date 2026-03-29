@@ -42,7 +42,7 @@ def upload_arquivo():
     arquivo = st.file_uploader("Escolha a série temporal", type="csv", accept_multiple_files=False)
     if arquivo == None:
         st.warning("Por favor, envie um arquivo")
-        return
+        st.stop()
     
     tamanho_mb = arquivo.size / (1024 * 1024)
 
