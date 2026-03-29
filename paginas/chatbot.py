@@ -14,7 +14,7 @@ def renderiza_chat():
     st.title("Forecast AI ChatBot")
 
     load_dotenv()
-    API_KEY = os.getenv("API_KEY")
+    API_KEY = os.getenv("API_KEY_1")
     genai.configure(api_key=API_KEY)
 
     if "historico" not in st.session_state:
