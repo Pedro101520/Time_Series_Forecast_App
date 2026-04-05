@@ -5,6 +5,9 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 
+import warnings
+warnings.filterwarnings('ignore')
+
 def renderiza_chat():
     st.set_page_config(
         page_title="Forecast ChatBot",
