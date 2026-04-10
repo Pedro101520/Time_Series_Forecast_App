@@ -2,7 +2,7 @@ import streamlit as st
 from paginas.chatbot import renderiza_chat
 from paginas.upload import upload_arquivo
 from paginas.visao import exibe_painel
-from paginas.outliers import box_plot
+from paginas.outliers import box_plot, violin_plot
 
 def botao_chat():
     st.session_state.chat = not st.session_state.chat
@@ -14,6 +14,7 @@ def carrega_pagina():
         exibe_painel()
     elif st.session_state.pagina == "Outliers" and st.session_state.chat == False:
         box_plot()
+        violin_plot()
     elif st.session_state.pagina == "Estacionariedade" and st.session_state.chat == False:
         st.write("Estacionariedade")
     elif st.session_state.pagina == "Forecast" and st.session_state.chat == False:
