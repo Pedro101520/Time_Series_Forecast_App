@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 from statsmodels.tsa.seasonal import seasonal_decompose
+from utils.hipotese_adf import adf_test
 
 def plot_series(df):
     df = df.copy()
@@ -27,6 +28,9 @@ def exibe_painel():
     st.write("### Histórico da Série Temporal")
 
     plot_series(df)
+    adf_test()
+
+    st.divider()
 
     df.set_index("Data", inplace=True)
     df = df["Valor"]

@@ -14,9 +14,7 @@ def calculos(valores):
 
 
 def box_plot():
-    df = pd.DataFrame(
-        st.session_state["historico_analitico"]["Serie_Temporal_Tratada_Analitico"]
-    )
+    df = pd.DataFrame(st.session_state["historico_analitico"]["Serie_Temporal_Tratada_Analitico"])
 
     valores = df["Valor"]
     q1, mediana, q3, whisker_low, whisker_high, outliers = calculos(valores)

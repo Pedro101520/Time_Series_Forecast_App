@@ -87,8 +87,6 @@ def upload_arquivo():
             dados_api = consumindo_api(arquivo)
             arquivo.seek(0)
             analitico = consumindo_api_analitico(arquivo)
-            df_analitico = pd.DataFrame(analitico)
-            print(df_analitico.head())
             st.session_state["historico_analitico"] = analitico
 
         st.session_state.ok = True
