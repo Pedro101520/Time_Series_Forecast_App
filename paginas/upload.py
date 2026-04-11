@@ -61,15 +61,12 @@ def upload_arquivo():
     st.write("")
 
     arquivo = st.file_uploader("Escolha a série temporal", type="csv", accept_multiple_files=False)
-    if st.session_state.ok and arquivo == None:
-        st.warning("Deseja enviar um novo arquivo?")
-        st.session_state.ok = False
-        st.stop()
-    elif arquivo == None:
+    if arquivo == None:
         st.warning("Por favor, envie um arquivo")
         st.stop()
     elif st.session_state.ok and arquivo != None:
         st.success("Concluído")
+        st.session_state.ok_mensagem = True
         st.stop()
     
     tamanho_mb = arquivo.size / (1024 * 1024)
