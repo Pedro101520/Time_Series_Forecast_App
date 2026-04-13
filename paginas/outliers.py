@@ -77,9 +77,7 @@ def box_plot():
 
 
 def violin_plot():
-    df = pd.DataFrame(
-        st.session_state["historico_analitico"]["Serie_Temporal_Tratada_Analitico"]
-    )
+    df = pd.DataFrame(st.session_state["historico_analitico"]["Serie_Temporal_Tratada_Analitico"])
 
     st.write("### Violin Plot")
 

@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 import os
 
 def consumindo_api(arquivo):
-    print("Pedro")
     files = {"file": arquivo}
 
     load_dotenv()
@@ -17,7 +16,7 @@ def consumindo_api(arquivo):
     }
 
     response = requests.post(
-        "https://forecast-242878641551.southamerica-east1.run.app/pipeline/predicao", 
+        "http://192.168.200.201:5000/pipeline/predicao", 
         files=files,
         headers=headers
     )
@@ -42,7 +41,27 @@ def consumindo_api_analitico(arquivo):
     }
 
     response = requests.post(
-        "https://forecast-242878641551.southamerica-east1.run.app/analitico", 
+        "http://192.168.200.201:5000/analitico", 
+        files=files,
+        headers=headers
+    )
+
+    if response.status_code == 200:
+        payload = response.json()
+        return payload
+    
+def consumindo_api_tratamento(arquivo):
+    files = {"file": arquivo}
+
+    load_dotenv()
+    API_KEY = os.getenv("API_KEY_2")
+
+    headers = {
+        "x-api-key": API_KEY
+    }
+
+    response = requests.post(
+        "http://192.168.200.201:5000/tratamento", 
         files=files,
         headers=headers
     )
@@ -60,7 +79,7 @@ def upload_arquivo():
     st.write("")
     st.write("")
 
-    arquivo = st.file_uploader("Escolha a série temporal", type="csv", accept_multiple_files=False)
+    arquivo = st.file_uploader("Escolha a série temporal", type="csv", accept_multiple_files=False) 
     if arquivo == None:
         st.warning("Por favor, envie um arquivo")
         st.stop()
@@ -85,6 +104,9 @@ def upload_arquivo():
             arquivo.seek(0)
             analitico = consumindo_api_analitico(arquivo)
             st.session_state["historico_analitico"] = analitico
+            arquivo.seek(0)
+            tratamento = consumindo_api_tratamento(arquivo)
+            st.session_state["tratamento_sem_outliers"] = tratamento
 
         st.session_state.ok = True
         st.session_state["message"] = dados_api["message"]

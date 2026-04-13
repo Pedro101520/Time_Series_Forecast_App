@@ -1,25 +1,34 @@
 import pandas as pd
 import streamlit as st
-import altair as alt
+import plotly.graph_objects as go
 from statsmodels.tsa.seasonal import seasonal_decompose
 from utils.hipotese_adf import adf_test
 
 def plot_series(df):
-    df = df.copy()
     df["Data"] = pd.to_datetime(df["Data"])
 
-    chart = alt.Chart(df).mark_line().encode(
-        x=alt.X("Data:T", title="Data"),
-        y=alt.Y("Valor:Q", title="Valor"),
-        tooltip=[
-            alt.Tooltip("Data:T", title="Data", format="%Y-%m-%d %H:%M"),
-            alt.Tooltip("Valor:Q", title="Valor", format=".2f")
-        ],
+    fig = go.Figure()
 
-        color=alt.Color("Tipo:N", title="Legenda") if "Tipo" in df.columns else alt.value("#4c78a8")
-    ).interactive()
+    fig.add_trace(go.Scatter(
+        x=df["Data"],
+        y=df["Valor"],
+        mode="lines+markers",
+        name="Histórico",
+        line=dict(color="#1D9E75", width=2.5),
+        marker=dict(size=4),
+    ))
 
-    st.altair_chart(chart, use_container_width=True)
+    fig.update_layout(
+        hovermode="x unified",
+        xaxis=dict(title="Data", showgrid=True, gridcolor="rgba(128,128,128,0.15)"),
+        yaxis=dict(title="Valor", showgrid=True, gridcolor="rgba(128,128,128,0.15)"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
+        plot_bgcolor="rgba(0,0,0,0)",
+        paper_bgcolor="rgba(0,0,0,0)",
+        margin=dict(t=40, b=40, l=10, r=10),
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
 
 def exibe_painel():
     df = pd.DataFrame(st.session_state["historico_analitico"]["Serie_Temporal_Tratada_Analitico"])

@@ -3,6 +3,7 @@ from paginas.chatbot import renderiza_chat
 from paginas.upload import upload_arquivo
 from paginas.visao import exibe_painel
 from paginas.outliers import box_plot, violin_plot
+from paginas.forecast import forecast_sarima, forecast_prophet, forecast_holt_winters, infos
 
 def botao_chat():
     st.session_state.chat = not st.session_state.chat
@@ -16,7 +17,16 @@ def carrega_pagina():
         box_plot()
         violin_plot()
     elif st.session_state.pagina == "Forecast" and st.session_state.chat == False:
-        st.write("Forecast")
+        infos()
+        if st.session_state["Melhor_Modelo"] == "Sarima":
+            print("A")
+            forecast_sarima()
+        elif st.session_state["Melhor_Modelo"] == "Prophet":
+            print("B")
+            forecast_prophet()
+        elif st.session_state["Melhor_Modelo"] == "Holt Winters":
+            print("C")
+            forecast_holt_winters()
 
 if "pagina" not in st.session_state:
     st.session_state.pagina = "Upload"
