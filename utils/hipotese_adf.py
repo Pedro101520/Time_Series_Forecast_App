@@ -6,7 +6,7 @@ def adf_test():
     df = pd.DataFrame(st.session_state["historico_analitico"]["Serie_Temporal_Tratada_Analitico"])
     result = adfuller(df["Valor"])
 
-    st.write("### 📊 Teste de Estacionariedade (ADF)")
+    st.write("### Teste de Estacionariedade (ADF)")
 
     if result[1] <= 0.05:
         st.write(f"""
