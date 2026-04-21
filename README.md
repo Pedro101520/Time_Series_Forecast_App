@@ -7,10 +7,10 @@ Por meio desta demonstração, é possível enviar dados, visualizar previsões 
 ## Repositório da API: <https://github.com/Pedro101520/Time_Series_Forecast_API/edit/main/README.md>
 
 ## Tecnologias Utilizadas:
-Streamlit
-Python
-Pandas
-Matplotlib
+- Streamlit
+- Python
+- Pandas
+- Matplotlib
 
 ## Objetivo
 Facilitar o uso da API de forecast através de uma interface, permitindo que usuários testem funcionalidades sem necessidade de chamadas diretas via código ou ferramentas como Postman.
