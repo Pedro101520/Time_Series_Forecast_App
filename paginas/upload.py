@@ -16,7 +16,7 @@ def consumindo_api(arquivo):
     }
 
     response = requests.post(
-        "http://192.168.200.201:5000/pipeline/predicao", 
+        "https://forecast-242878641551.southamerica-east1.run.app/pipeline/predicao", 
         files=files,
         headers=headers
     )
@@ -41,7 +41,7 @@ def consumindo_api_analitico(arquivo):
     }
 
     response = requests.post(
-        "http://192.168.200.201:5000/analitico", 
+        "https://forecast-242878641551.southamerica-east1.run.app/analitico", 
         files=files,
         headers=headers
     )
@@ -61,7 +61,7 @@ def consumindo_api_tratamento(arquivo):
     }
 
     response = requests.post(
-        "http://192.168.200.201:5000/tratamento", 
+        "https://forecast-242878641551.southamerica-east1.run.app/tratamento", 
         files=files,
         headers=headers
     )
@@ -69,8 +69,6 @@ def consumindo_api_tratamento(arquivo):
     if response.status_code == 200:
         payload = response.json()
         return payload
-
-
 
 def upload_arquivo():
     st.write("# Faça o upload de sua série temporal")
@@ -80,25 +78,28 @@ def upload_arquivo():
     st.write("")
 
     arquivo = st.file_uploader("Escolha a série temporal", type="csv", accept_multiple_files=False) 
+    if arquivo == None and st.session_state.processo == False:
+        st.session_state.processo = True
+        st.rerun()
+    if st.session_state.processo == False:
+        st.success("Concluído")
+        return
     if arquivo == None:
         st.warning("Por favor, envie um arquivo")
-        st.stop()
-    elif st.session_state.ok and arquivo != None:
-        st.success("Concluído")
-        st.session_state.ok_mensagem = True
-        st.stop()
+        return
+
     
     tamanho_mb = arquivo.size / (1024 * 1024)
 
     if tamanho_mb > 50:
         st.error("O arquivo deve ter no máximo 50MB.")
-        st.stop()
+        return
 
     st.write("")
     st.write("")
     st.write("")
 
-    if not(st.session_state.ok):
+    if st.session_state.processo:
         with st.spinner("Aguarde...", show_time=True):
             dados_api = consumindo_api(arquivo)
             arquivo.seek(0)
@@ -113,4 +114,5 @@ def upload_arquivo():
         st.session_state["Melhor_Modelo"] = dados_api["Melhor Modelo"]
         st.session_state["Metricas"] = dados_api["Metricas"]
         st.session_state["Forecast"] = dados_api["Forecast"]
-    st.rerun()
+        st.session_state.processo = False
+        st.rerun()

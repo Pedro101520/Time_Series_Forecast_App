@@ -18,14 +18,11 @@ def carrega_pagina():
         violin_plot()
     elif st.session_state.pagina == "Forecast" and st.session_state.chat == False:
         infos()
-        if st.session_state["Melhor_Modelo"] == "Sarima":
-            print("A")
+        if st.session_state["Melhor_Modelo"] == "SARIMA":
             forecast_sarima()
         elif st.session_state["Melhor_Modelo"] == "Prophet":
-            print("B")
             forecast_prophet()
-        elif st.session_state["Melhor_Modelo"] == "Holt Winters":
-            print("C")
+        elif st.session_state["Melhor_Modelo"] == "Holt-Winters":
             forecast_holt_winters()
 
 if "pagina" not in st.session_state:
@@ -36,6 +33,9 @@ if "chat" not in st.session_state:
 
 if "ok" not in st.session_state:
     st.session_state.ok = False
+
+if "processo" not in st.session_state:
+    st.session_state.processo = False
 
 st.sidebar.write("# Navegação Forecast")
 pagina = st.sidebar.selectbox("Navegação", ["1. Upload", "2. Visão Geral", "3. Outliers", "4. Forecast"], disabled=st.session_state.chat or not(st.session_state.ok), label_visibility="collapsed")
@@ -64,6 +64,8 @@ else:
         on_click=botao_chat,
         use_container_width=True
     )
+st.sidebar.divider()
+st.sidebar.warning("Resultados dependem da qualidade dos dados de entrada.")
 
 if st.session_state.chat:
     renderiza_chat()
