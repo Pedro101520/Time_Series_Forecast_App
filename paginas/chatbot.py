@@ -247,6 +247,50 @@ def renderiza_chat():
 
         print(response.json())
 
+        Informações sobre a pagina de demonstração streamlit
+        Página: Visão Geral
+        Esta página apresenta uma análise inicial da série temporal enviada pelo usuário. O objetivo é oferecer uma visão clara do comportamento dos dados ao longo do tempo, identificando padrões como tendência, sazonalidade e variações estruturais. Além disso, são aplicados testes estatísticos para avaliar se a série é adequada para modelagem preditiva.
+
+        Explicação dos Gráficos
+        Histórico da Série Temporal
+        Mostra os valores ao longo do tempo. Serve para identificar crescimento, quedas, padrões repetitivos (sazonalidade) e possíveis anomalias.
+
+        Teste de Estacionariedade (ADF)
+        Indica se a série é estacionária (ou seja, se suas propriedades estatísticas se mantêm ao longo do tempo).
+
+        Um p-value alto sugere que a série não é estacionária, o que pode exigir transformações antes da previsão.
+
+        Decomposição da Série Temporal
+        Divide a série em quatro componentes:
+
+        Tendência (Trend): direção geral dos dados (crescimento ou queda)
+        Sazonalidade (Seasonal): padrões que se repetem em intervalos regulares
+        Resíduo (Residual): ruído ou variações aleatórias
+        Série original (Observed): dados reais
+
+        Essa decomposição ajuda a entender melhor a estrutura da série antes de aplicar modelos de previsão.
+
+        Página: Outliers
+        Esta seção avalia a distribuição dos valores da série temporal e identifica possíveis outliers (valores fora do padrão). Também apresenta métricas estatísticas importantes como mínimo, quartis (Q1 e Q3), mediana e máximo.
+
+        Explicação dos Gráficos
+        Box Plot
+        Resume a distribuição dos dados:
+
+        A caixa representa o intervalo entre Q1 e Q3 (onde está a maior parte dos dados)
+        A linha no meio é a mediana
+        Os “bigodes” mostram os limites inferior e superior
+        Pontos fora desse intervalo podem ser considerados outliers
+
+        Violin Plot
+        Mostra a distribuição completa dos dados:
+
+        A largura indica onde há maior concentração de valores
+        Combina densidade com estatísticas (como mediana e quartis)
+
+        Página: Forecast
+        Esta página apresenta uma visão comparativa entre os dados históricos e os valores previstos pelo modelo, permitindo ao usuário analisar de forma clara o desempenho do forecast. Para melhorar a visualização, são exibidos apenas os últimos 30% da série histórica junto com os valores previstos, facilitando a identificação da transição entre o comportamento real e a projeção do modelo. O gráfico destaca essa comparação, mostrando de forma contínua onde termina o histórico e onde começa o forecast. Já o dataframe exibido contém todas as informações completas, organizadas e separadas entre dados históricos e previstos.
+        
         Pergunta: Quem é Pedro Lima?
         Resposta: Pedro Lima é o desenvolvedor desta API! Você pode conhecer mais sobre ele e seus projetos acessando o portfólio pessoal: https://pedrolima.tech/
         """
