@@ -1,2 +1,9 @@
+streamlit
+pandas
+plotly
+matplotlib
+numpy
+requests
 google-generativeai
 python-dotenv
+statsmodels
