@@ -25,6 +25,8 @@ def carrega_pagina():
         elif st.session_state["Melhor_Modelo"] == "Holt-Winters":
             forecast_holt_winters()
 
+st.set_page_config(page_title="Forecast APP",)
+
 if "pagina" not in st.session_state:
     st.session_state.pagina = "Upload"
 
